@@ -1,23 +1,16 @@
 package com.practice.pattern.singleton;
 
 public class Settings {
-
-    // 객체 생성 비용이 적은 경우
-    // eager initialization - thread-safe
-    public static final Settings INSTANCE = new Settings();
-
+    // static inner 클래스 활용해서 싱글턴 인스턴스 생성
     private Settings() {}
 
-    public static Settings getInstance() {
-        return INSTANCE;
+    private static class SettingsHolder {
+        private static final Settings INSTANCE = new Settings();
     }
-/*
-    private static Settings instance;
 
-    public static synchronized Settings getInstance() {
-        if (instance == null) {
-            instance = new Settings();
-        }
-        return instance;
-    }*/
+    public static Settings getInstance() {
+        // getInstance()가 호출될 때 SettingHolder가 로딩되고,
+        // 그 때 INSTANCE가 생성된다.
+        return SettingsHolder.INSTANCE;
+    }
 }
